@@ -25,7 +25,7 @@ const Author = () => {
         </>
     )
 }
-Comment.propTypes = {
+Author.propTypes = {
     filter: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired
 }
