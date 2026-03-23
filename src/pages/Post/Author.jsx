@@ -25,8 +25,4 @@ const Author = () => {
         </>
     )
 }
-Author.propTypes = {
-    filter: PropTypes.string.isRequired,
-    type: PropTypes.number.isRequired
-}
 export default Author
