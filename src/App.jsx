@@ -4,6 +4,7 @@ import './App.css'
 import Home from './pages/Home/Home'
 import MainLayout from './layouts/MainLayout'
 import Post from './pages/Post/Post'
+import Author from './pages/Post/Author'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route  element={<MainLayout />}>
           <Route path='/' element={<Home />} />
           <Route path='/post/:id' element={<Post />} />
+          <Route path='/author/:id' element={<Author />} />
         </Route>
       </Routes>
     </>
