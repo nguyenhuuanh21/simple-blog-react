@@ -5,8 +5,7 @@ import { getUser, selectUser } from '../../redux/slices/userSlice'
 import { useParams } from 'react-router-dom'
 import { selectStatus } from '../../redux/slices/postSlice'
 import Error from '../../components/Error'
-import Loading from '../../components/Loading'
-
+import PropTypes from 'prop-types'
 const Author = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -22,9 +21,12 @@ const Author = () => {
     return (
         <>
             <h1 style={{ textAlign: 'center' }}>Author : {user?.username}</h1>
-            <PostList filter="user" value={id} />
+            <PostList filter="user" type={id} />
         </>
     )
 }
-
+Comment.propTypes = {
+    filter: PropTypes.string.isRequired,
+    type: PropTypes.number.isRequired
+}
 export default Author

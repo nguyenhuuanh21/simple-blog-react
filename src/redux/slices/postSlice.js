@@ -48,6 +48,17 @@ export const postSlice = createSlice({
         builder.addCase(getPostByUser.rejected, (state, action) => {
             state.status = 'rejected'
         })
+        builder.addCase(getPostByTag.pending, (state, action) => {
+            state.status = 'pending'
+        })
+        builder.addCase(getPostByTag.fulfilled, (state, action) => {
+            state.status = 'fulfilled'
+            state.posts = action.payload.posts
+            state.postCount = action.payload.total
+        })
+        builder.addCase(getPostByTag.rejected, (state, action) => {
+            state.status = 'rejected'
+        })
     }
 
 })
@@ -96,9 +107,9 @@ export const getPost = createAsyncThunk('post/getPost', async (postId, { rejectW
         return rejectWithValue(error.message)
     }
 })
-export const getPostByUser = createAsyncThunk('post/getPostByUser', async (userId, { rejectWithValue }) => {
+export const getPostByUser = createAsyncThunk('post/getPostByUser', async ({ userId, skip }, { rejectWithValue }) => {
     try {
-        const res = await axios.get(`${getEnv('VITE_SERVER_API')}/users/${userId}/posts`)
+        const res = await axios.get(`${getEnv('VITE_SERVER_API')}/users/${userId}/posts?limit=${getEnv('VITE_LIMIT')}&skip=${skip}`)
         if (res.status !== 200) {
             return rejectWithValue('Error fetching posts')
         }
@@ -107,6 +118,21 @@ export const getPostByUser = createAsyncThunk('post/getPostByUser', async (userI
         return data;
 
     } catch (error) {
+        console.log("ERROR:", error);
+        return rejectWithValue(error.message)
+    }
+})
+export const getPostByTag = createAsyncThunk('post/getPostByTag', async ({ tag, skip }, { rejectWithValue }) => {
+    try{  
+        const res = await axios.get(`${getEnv('VITE_SERVER_API')}/posts/tag/${tag}?limit=${getEnv('VITE_LIMIT')}&skip=${skip}`)
+        console.log(`${getEnv('VITE_SERVER_API')}/posts/tag/${tag}?limit=${getEnv('VITE_LIMIT')}&skip=${skip}`);
+        if (res.status !== 200) {
+            return rejectWithValue('Error fetching posts')
+        }
+        const data = await res.data
+        console.log(data);
+        return data;
+    }catch(error){
         console.log("ERROR:", error);
         return rejectWithValue(error.message)
     }

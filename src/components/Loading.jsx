@@ -1,5 +1,5 @@
 import { Backdrop, CircularProgress } from '@mui/material'
-import React from 'react'
+import PropTypes from 'prop-types'
 
 const Loading = ({ type = 'backdrop' }) => {
     return (
@@ -15,5 +15,7 @@ const Loading = ({ type = 'backdrop' }) => {
         )
     )
 }
-
+Loading.prototype = {
+    type: PropTypes.string
+}
 export default Loading
